@@ -1,19 +1,49 @@
 body {
-  background-color: rgb(20, 20, 20);
+  background-image: url("images/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+  pointer-events: none;
+}
+
+#site-header {
+  position: fixed;
+  top: 10px;
+  left: 60px;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  gap: 5px;
+  user-select: none;
+}
+
+#site-logo {
+  width: 42px;
+  height: 42px;
 }
 
 #site-title {
   position: fixed;
-  top: 10px;
-  left: 60px;
-  font-size: 24px;
+  top: 8px;
+  left: 105px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 34px;
   font-weight: bold;
   color: white;
-  z-index: 1000;
-  font-family: 'Segoe UI', sans-serif;
-  user-select: none;
 }
 
 #menu-button {
@@ -21,16 +51,19 @@ body {
   top: 10px;
   left: 10px;
   background-color: rgb(50, 50, 50);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: none;
   padding: 5px;
   cursor: pointer;
   z-index: 1000;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #menu-button:hover {
-  background-color: rgb(70, 70, 70);
+  background-color: rgba(75, 75, 75, 0.5);
+  transform: scale(1.1);
 }
 
 #menu-icon {
@@ -45,7 +78,7 @@ body {
   left: -270px;
   width: 250px;
   height: 100%;
-  background-color: #222;
+  background-color: rgb(25, 25, 25);
   border-radius: 0 20px 20px 0;
   transition: left 0.3s ease;
   z-index: 1000;
@@ -71,4 +104,93 @@ body {
 #overlay.show {
   opacity: 1;
   visibility: visible;
+}
+
+#start-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(25, 25, 25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: zoomSequence 5.6s ease forwards;
+  transform-origin: center;
+}
+
+#start-content {
+  text-align: center;
+  animation: zoomSequence 5.6s ease forwards;
+  transform-origin: center;
+}
+
+#start-screen h1 {
+  color: white;
+  font-size: 48px;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+#progress-bar {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 480px;
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+#progress-fill {
+  width: 0%;
+  height: 100%;
+  background-color: rgb(255, 0, 200);
+  border-radius: 6px;
+  animation: fillProgress 5s linear forwards;
+}
+
+@keyframes fillProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes zoomSequence {
+  0%   { transform: scale(0.75); opacity: 0.75; }
+  2.5% { transform: scale(1); opacity: 1; }
+  95% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 1; }
+}
+
+#loading-status {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  font-size: 15px;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  user-select: none;
+}
+
+#loading-dots {
+  display: inline-block;
+}
+
+.dot {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#loading-percent {
+  transition: opacity 0.2s ease;
 }
