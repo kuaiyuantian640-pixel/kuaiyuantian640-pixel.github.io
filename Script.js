@@ -94,11 +94,11 @@ function showNotification(message, duration = 3000, type = "default", buttonName
   if (type === "button" && buttonName) {
     const title = document.createElement("div");
     title.className = "notification-title";
-    title.textContent = "Button Pushed";
+    title.textContent = "Button Pressed";
 
     const detail = document.createElement("div");
     detail.className = "notification-detail";
-    detail.textContent = `${buttonName} Button Pushed`;
+    detail.textContent = `${buttonName} Button Pressed`;
 
     textWrapper.appendChild(title);
     textWrapper.appendChild(detail);
@@ -144,4 +144,5 @@ if (savedColor) {
   colorPicker.value = savedColor;
   progressFill.style.backgroundColor = savedColor;
 }
+
 });
