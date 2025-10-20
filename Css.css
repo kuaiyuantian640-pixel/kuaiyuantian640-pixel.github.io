@@ -51,8 +51,6 @@ body::before {
   top: 10px;
   left: 10px;
   background-color: rgb(50, 50, 50);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: none;
   padding: 5px;
   cursor: pointer;
@@ -75,8 +73,8 @@ body::before {
 #sideMenu {
   position: fixed;
   top: 0;
-  left: -270px;
-  width: 250px;
+  left: -320px;
+  width: 300px;
   height: 100%;
   background-color: rgb(25, 25, 25);
   border-radius: 0 20px 20px 0;
@@ -106,6 +104,221 @@ body::before {
   visibility: visible;
 }
 
+.menu-list {
+  list-style: none; /* ← 黒丸を消す */
+  padding: 0;
+  margin: 0;
+}
+
+.menu-label {
+  display: flex;
+  justify-content: space-between; /* ← 左右に分ける */
+  align-items: center;
+  padding: 16px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  pointer-events: none;
+}
+
+.menu-label-title {
+  color: #ffffff;
+}
+
+.menu-label-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* ← アイコンと文字の間隔 */
+}
+
+.menu-brand-text {
+  color: #ffffff; /* ← Pack-HUBの文字色（お好みで） */
+}
+
+.menu-item {
+  margin-top: 4px;
+  display: flex;
+  align-items: center; /* ← 高さを揃える */
+  gap: 10px;
+  padding: 12px 20px;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0; /* ← 潰れ防止 */
+  object-fit: contain; /* ← 画像の比率を保つ */
+  vertical-align: middle; /* ← テキストと揃える */
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#settings-panel {
+  width: 1000px;
+  height: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(30, 30, 30);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  z-index: 3000;
+  display: none;
+}
+
+#close-settings {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;         /* 白い背景を消す */
+  border: none;             /* 枠線（outline）を消す */
+  outline: none;            /* フォーカス時の枠線も消す */
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+  z-index: 1;
+}
+
+#close-settings:hover {
+  transform: scale(1.2);
+  color: rgb(150, 150, 150);
+}
+
+#settings-panel h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+input[type="color"] {
+  outline: none;
+  border: none;
+  width: 20px;
+  height: 22px;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+}
+
+#notification-lifetime {
+  width: 100px;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  background: none;
+}
+
+#lifetime-value {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 14px;
+  color: #ffcc00;
+  vertical-align: middle;
+}
+
+/* ラベル共通スタイル（Progress Bar Color や Notification Life Time） */
+#settings-panel label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+}
+
+#notification-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column-reverse; /* 新しい通知が上に表示される */
+  gap: 10px;
+  z-index: 4000;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: rgb(50, 50, 50);
+  color: rgb(255, 255, 255);
+  padding: 5px 25px;
+  border-radius: 10px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateX(100%);
+  opacity: 0;
+  animation: slideIn 0.4s ease forwards;
+  position: relative;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.notification-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-left: -8px;
+}
+
+.notification-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.notification-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.notification-detail {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
 #start-screen {
   position: fixed;
   top: 0;
@@ -131,6 +344,7 @@ body::before {
   color: white;
   font-size: 48px;
   font-family: 'Segoe UI', sans-serif;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
   margin-bottom: 20px;
   user-select: none;
 }
@@ -144,6 +358,9 @@ body::before {
   height: 25px;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.2),
+    inset 0 -1px 2px rgba(0,0,0,0.4);
   overflow: hidden;
   margin: 0 auto;
 }
@@ -151,9 +368,14 @@ body::before {
 #progress-fill {
   width: 0%;
   height: 100%;
-  background-color: rgb(255, 0, 200);
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(0,0,0,0.3)),
+    var(--progress-base-color, rgb(255, 0, 0));
   border-radius: 6px;
   animation: fillProgress 5s linear forwards;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.2),
+    inset 0 -1px 2px rgba(0,0,0,0.4);
 }
 
 @keyframes fillProgress {
@@ -179,6 +401,7 @@ body::before {
   font-size: 15px;
   font-family: 'Segoe UI', sans-serif;
   color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
   user-select: none;
 }
 
